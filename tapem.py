@@ -275,6 +275,11 @@ def get_args():
         '-i',
         help='Install to /usr/local/bin (may need sudo)',
         action="store_true")
+    argparser.add_argument(
+        '--version',
+        '-v',
+        help="Show version information",
+        action="store_true")
     args = argparser.parse_args()
     return args
 
@@ -284,10 +289,18 @@ def installer():
     os.system("chmod ugo+x /usr/local/bin/tap-em")
     sys.exit(0)
 
+def version():
+    print("tap-em version {}".format(__version__))
+    p = os.path.abspath(os.path.realpath(__file__))
+    print("Running from: {}".format(p))
+    sys.exit(0)
+
 if __name__ == "__main__":
     args = get_args()
     if args.install:
         installer()
+    if args.version:
+        version()
     t = Tapper()
     if args.ascii:
         t.set_ascii()
