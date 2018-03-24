@@ -191,10 +191,11 @@ class Tapper:
                 self.process_line(line)
 
     def finalize(self):
-        errors, tap_errors = len(self.errors), len(self.tap_errors)
+        errors, results = len(self.errors), len(self.results)
         numbers = len(self.numbers)
         results = len(self.results)
         test_range = len(self.range)
+        tap_errors = self.tap_errors
 
         if test_range <= 0:
             tap_errors.append("No test range found")
@@ -204,7 +205,7 @@ class Tapper:
             tap_errors.append(
                 "More test results than possible for test range: {}/{}".format(
                     max(numbers, results), test_range))
-        self.error_count = errors + tap_errors
+        self.error_count = errors + len(tap_errors)
 
     def summarize(self):
         emoji = self.emoji
