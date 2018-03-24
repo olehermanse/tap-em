@@ -84,7 +84,7 @@ class Tapper:
         self.successes = []  # not ok test results
         self.results = []  # ok / not ok test results
         self.numbers = []  # unique test numbers encountered
-        self.range = []  # Tests which should run
+        self.plan = []  # Tests which should run
         self.tap_errors = []  # Errors in the TAP test output
         self.error_count = -1
 
@@ -118,12 +118,12 @@ class Tapper:
             num = int(num)
         except (ValueError, TypeError):
             self.tap_errors.append("Invalid test number: '{}'".format(num))
-        if len(self.range) == 0:
+        if len(self.plan) == 0:
             self.tap_errors.append(
-                "No test range defined before result no. {}".format(num))
-        elif num not in self.range:
+                "No test plan defined before result no. {}".format(num))
+        elif num not in self.plan:
             self.tap_errors.append(
-                "Test result {} doesn't fit into any previous range".format(
+                "Test result {} doesn't fit into any previous plan".format(
                     num))
         if num in self.numbers:
             self.tap_errors.append(
@@ -131,7 +131,7 @@ class Tapper:
         else:
             self.numbers.append(num)
 
-    def maybe_range(self, word):
+    def maybe_plan(self, word):
         processed = word.replace("..", " ")
         print(processed)
         if "." in processed:
@@ -141,14 +141,14 @@ class Tapper:
             return
         a, b = int(parts[0]), int(parts[1])
         if a > b:
-            self.tap_errors.append("Invalid range: {}".format(word))
+            self.tap_errors.append("Invalid plan: {}".format(word))
             return
-        new_range = range(a, b + 1)
-        for num in new_range:
-            if num not in self.range:
-                self.range.append(num)
+        new_plan = range(a, b + 1)
+        for num in new_plan:
+            if num not in self.plan:
+                self.plan.append(num)
             else:
-                self.tap_errors.append("Overlapping range '{}' at '{}'".format(
+                self.tap_errors.append("Overlapping plan '{}' at '{}'".format(
                     word, num))
 
     def process_line(self, line):
@@ -172,7 +172,7 @@ class Tapper:
 
         seq = stripped.split()
         if len(seq) > 0 and ".." in seq[0]:
-            self.maybe_range(seq[0])
+            self.maybe_plan(seq[0])
 
         print(line, end="")
 
@@ -193,18 +193,17 @@ class Tapper:
     def finalize(self):
         errors, results = len(self.errors), len(self.results)
         numbers = len(self.numbers)
-        results = len(self.results)
-        test_range = len(self.range)
+        test_plan = len(self.plan)
         tap_errors = self.tap_errors
 
-        if test_range <= 0:
-            tap_errors.append("No test range found")
+        if test_plan <= 0:
+            tap_errors.append("No test plan found")
         if results <= 0:
             tap_errors.append("No test results found")
-        if (numbers > test_range) or (results > test_range):
+        if (numbers > test_plan) or (results > test_plan):
             tap_errors.append(
-                "More test results than possible for test range: {}/{}".format(
-                    max(numbers, results), test_range))
+                "More test results than possible for test plan: {}/{}".format(
+                    max(numbers, results), test_plan))
         self.error_count = errors + len(tap_errors)
 
     def summarize(self):
@@ -239,7 +238,7 @@ class Tapper:
             yield prefixed(success_message, emoji["great_success"])
         else:
             all_failed = not self.successes and len(self.results) == len(
-                self.range)
+                self.plan)
             some_all = "All" if all_failed else "Some"
             failure_message = some_all + " tests failed - " + emoji_summary
             fail_emoji = emoji["disaster"]
