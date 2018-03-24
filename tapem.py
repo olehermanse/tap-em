@@ -4,6 +4,16 @@
 
 Test Anything Protocol (testanything.org) is an output format for tests.
 
+Hightlights:
+    * Standalone script with one single dependency (python 2.7 or 3.x)
+    * Platform agnostic - runs on windows, mac, linux or any system with python
+    * Permissive MIT License - can be used in ANY project
+    * Supports any test / framework which can output TAP format
+    * Reads from file or pipe
+    * Prints output as it's reading
+    * Summarizes results using clear formatting and emoji (can be disabled)
+    * Exits with 0 on success or number of errors (max 100)
+
 Todo:
     * Support test skipping
     * Test counter (make test number optional)
@@ -66,7 +76,7 @@ __author__ = "Ole Herman Schumacher Elgesem"
 __copyright__ = "Copyright 2018, Ole Herman Schumacher Elgesem"
 __license__ = "MIT"
 
-__version__ = "0.1.0"
+__version__ = "0.1.1-beta"
 
 import sys
 import os
