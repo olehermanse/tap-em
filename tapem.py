@@ -115,7 +115,7 @@ class Tapper:
     def found_number(self, num):
         try:
             num = int(num)
-        except:
+        except (ValueError, TypeError):
             self.tap_errors.append("Invalid test number: '{}'".format(num))
         if len(self.range) == 0:
             self.tap_errors.append(
