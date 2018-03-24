@@ -1,0 +1,11 @@
+1..10
+not ok 1 - assertions
+not ok 2 - language
+not ok 3 - library
+not ok 4 - database
+not ok 5 - networking
+not ok 6 - api
+not ok 7 - integration
+not ok 8 - tooling
+not ok 9 - deployment
+not ok 10 - release
