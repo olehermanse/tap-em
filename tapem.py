@@ -69,6 +69,7 @@ __license__ = "MIT"
 __version__ = "0.1.0"
 
 import sys
+import os
 
 import argparse
 
@@ -259,12 +260,24 @@ def get_args():
         '-a',
         help='ASCII compatible emoticons',
         action="store_true")
+    argparser.add_argument(
+        '--install',
+        '-i',
+        help='Install to /usr/local/bin (may need sudo)',
+        action="store_true")
     args = argparser.parse_args()
     return args
 
 
+def installer():
+    os.system("cp {} /usr/local/bin/tap-em".format(__file__))
+    os.system("chmod ugo+x /usr/local/bin/tap-em")
+    sys.exit(0)
+
 if __name__ == "__main__":
     args = get_args()
+    if args.install:
+        installer()
     t = Tapper()
     if args.ascii:
         t.set_ascii()
