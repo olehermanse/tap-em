@@ -279,8 +279,13 @@ def get_args():
 
 
 def installer():
-    os.system("cp {} /usr/local/bin/tap-em".format(__file__))
-    os.system("chmod ugo+x /usr/local/bin/tap-em")
+    try:
+        assert 0 == os.system("cp {} /usr/local/bin/tap-em".format(__file__))
+        assert 0 == os.system("chmod ugo+x /usr/local/bin/tap-em")
+        assert 0 == os.system("tap-em --version")
+    except AssertionError:
+        print("Installation failed")
+        sys.exit(1)
     sys.exit(0)
 
 def version():
