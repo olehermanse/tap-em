@@ -14,19 +14,13 @@ Hightlights:
     * Summarizes results using clear formatting and emoji (can be disabled)
     * Exits with 0 on success or number of errors (max 100)
 
-Todo:
+Todo (Not yet implemented):
     * Support test skipping
     * Test counter (make test number optional)
     * Use official regex for line detection
     * Allow test plan in end, but not middle
 
 Example:
-    $ cat tap_examples/basic.txt
-    1..4
-    ok 1 - Input file opened
-    not ok 2 - First line of the input valid
-    ok 3 - Read the rest of the file
-    not ok 4 - Summarized correctly # TODO Not written yet
     $ cat tap_examples/basic.txt | python3 tapem.py
     1 4
     1..4
@@ -262,7 +256,7 @@ class Tapper:
 
 
 def get_args():
-    argparser = argparse.ArgumentParser(description=__doc__)
+    argparser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     argparser.add_argument(
         '--file', '-f', help='File input (default stdin)', type=str)
     argparser.add_argument(
