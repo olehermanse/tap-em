@@ -40,7 +40,7 @@ Example:
     ❌  | not ok 4 - Summarized correctly # TODO Not written yet
 
     Summary: 2 ok  |  2 not ok  |  0 tap errors
-    🔥  | Some tests failed - 2 ✅  |  2 ❌  |  0 🚱
+    🔥  | Some tests failed | 2 ✅  |  2 ❌  |  0 🚱
     $ echo $?
     2
 """
@@ -244,7 +244,7 @@ class Tapper:
             all_failed = not self.successes and len(self.results) == len(
                 self.plan)
             some_all = "All" if all_failed else "Some"
-            failure_message = some_all + " tests failed - " + emoji_summary
+            failure_message = some_all + " tests failed | " + emoji_summary
             fail_emoji = emoji["disaster"]
             if self.tap_errors or not self.successes:
                 fail_emoji = emoji["catastrophe"]
