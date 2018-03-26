@@ -256,7 +256,8 @@ class Tapper:
 
 
 def get_args():
-    argparser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
+    argparser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     argparser.add_argument(
         '--file', '-f', help='File input (default stdin)', type=str)
     argparser.add_argument(
@@ -288,11 +289,13 @@ def installer():
         sys.exit(1)
     sys.exit(0)
 
+
 def version():
     print("tap-em version {}".format(__version__))
     p = os.path.abspath(os.path.realpath(__file__))
     print("Running from: {}".format(p))
     sys.exit(0)
+
 
 if __name__ == "__main__":
     args = get_args()
