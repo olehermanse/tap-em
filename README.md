@@ -1,5 +1,5 @@
 # tap-em
-TAP (Test Anything Protocol) + Emoji
+Parse TAP to produce appropriate exit code and emojified summary.
 
 ## Example
 
